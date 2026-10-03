@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlavorFind | Recipe Finder App</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <!-- Font Awesome for Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+<body>
+  <!-- Navigation Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-utensils"></i>
+        <span>FlavorFind</span>
+      </div>
+
+      <div class="header-actions">
+        <button id="view-favorites-btn" class="nav-btn" aria-label="View Favorites">
+          <i class="fas fa-heart"></i>
+          <span>Favorites</span>
+          <span id="fav-count-badge" class="badge">0</span>
+        </button>
+
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+
+        <button id="api-settings-btn" class="icon-btn" aria-label="API Settings" title="Configure Spoonacular API Key">
+          <i class="fas fa-key"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Search & Filter Controls -->
+    <section class="search-section">
+      <div class="search-container">
+        <h1>Discover Delicious Recipes</h1>
+        <p>Search thousands of meals by ingredient, cuisine, or dietary preference.</p>
+
+        <form id="search-form" class="search-form">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search dishes or ingredients (e.g., pasta, chicken, tacos)..."
+              autocomplete="off"
+            />
+            <button type="submit" class="btn-search">Search</button>
+          </div>
+
+          <div class="filters-row">
+            <div class="filter-group">
+              <label for="cuisine-select"><i class="fas fa-globe-americas"></i> Cuisine</label>
+              <select id="cuisine-select">
+                <option value="">All Cuisines</option>
+                <option value="Italian">Italian</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Asian">Asian</option>
+                <option value="American">American</option>
+                <option value="Indian">Indian</option>
+                <option value="Mediterranean">Mediterranean</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="diet-select"><i class="fas fa-leaf"></i> Diet</label>
+              <select id="diet-select">
+                <option value="">All Diets</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten free">Gluten Free</option>
+                <option value="ketogenic">Ketogenic</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="type-select"><i class="fas fa-concierge-bell"></i> Meal Type</label>
+              <select id="type-select">
+                <option value="">All Types</option>
+                <option value="main course">Main Course</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="dessert">Dessert</option>
+                <option value="salad">Salad</option>
+                <option value="soup">Soup</option>
+              </select>
+            </div>
+
+            <button type="button" id="reset-filters-btn" class="btn-reset">
+              <i class="fas fa-redo-alt"></i> Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Recipe Display Section -->
+    <section class="results-section">
+      <div class="results-header">
+        <h2 id="section-title">Popular Recipes</h2>
+        <span id="results-count" class="results-count">Showing results</span>
+      </div>
+
+      <!-- State Containers -->
+      <div id="loading-spinner" class="loading-state" style="display: none;">
+        <div class="spinner"></div>
+        <p>Cooking up recipes...</p>
+      </div>
+
+      <div id="error-message" class="message-banner error" style="display: none;"></div>
+
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <i class="fas fa-search-minus empty-icon"></i>
+        <h3>No recipes found</h3>
+        <p>Try searching with different keywords or clearing your filters.</p>
+      </div>
+
+      <!-- Grid for Recipe Cards -->
+      <div id="recipe-grid" class="recipe-grid"></div>
+    </section>
+  </main>
+
+  <!-- Recipe Details Modal -->
+  <div id="recipe-modal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div id="modal-body">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- API Key Modal -->
+  <div id="api-modal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-content api-modal-box">
+      <button class="modal-close" id="api-modal-close" aria-label="Close dialog">&times;</button>
+      <h2>API Configuration</h2>
+      <p class="api-help-text">
+        Enter your free <strong>Spoonacular API key</strong> to unlock full cuisine and diet filtering.
+        If left blank, the app runs on the free open recipe database seamlessly.
+      </p>
+      <form id="api-key-form">
+        <input
+          type="text"
+          id="api-key-input"
+          placeholder="Paste your Spoonacular API Key here..."
+        />
+        <div class="api-modal-actions">
+          <button type="submit" class="btn-primary">Save Key</button>
+          <button type="button" id="clear-api-key" class="btn-secondary">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 FlavorFind. Powered by Spoonacular & TheMealDB APIs.</p>
+  </footer>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
